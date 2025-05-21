@@ -20,20 +20,16 @@ public class PostService {
     }
 
     public Post create(Post post) {
-        // проверяем выполнение необходимых условий
         if (post.getDescription() == null || post.getDescription().isBlank()) {
             throw new ConditionsNotMetException("Описание не может быть пустым");
         }
-        // формируем дополнительные данные
         post.setId(getNextId());
         post.setPostDate(Instant.now());
-        // сохраняем новую публикацию в памяти приложения
         posts.put(post.getId(), post);
         return post;
     }
 
     public Post update(Post newPost) {
-        // проверяем необходимые условия
         if (newPost.getId() == null) {
             throw new ConditionsNotMetException("Id должен быть указан");
         }

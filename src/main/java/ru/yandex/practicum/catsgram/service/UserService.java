@@ -2,7 +2,6 @@ package ru.yandex.practicum.catsgram.service;
 
 import org.springframework.stereotype.Service;
 import ru.yandex.practicum.catsgram.exception.ConditionsNotMetException;
-import ru.yandex.practicum.catsgram.exception.DuplicatedDataException;
 import ru.yandex.practicum.catsgram.exception.NotFoundException;
 import ru.yandex.practicum.catsgram.model.User;
 
@@ -25,7 +24,7 @@ public class UserService {
             throw new ConditionsNotMetException("Адрес электронной почты не может быть пустым");
         }
         if (users.containsKey(user.getEmail())) {
-            throw new DuplicatedDataException("Пользователь с электронной почтой " + user.getEmail() + " уже зарегистрирован");
+            throw new NotFoundException("Пользователь с электронной почтой " + user.getEmail() + " уже зарегистрирован");
         }
         user.setId(getNextId());
         user.setRegistrationDate(Instant.now());
@@ -34,7 +33,6 @@ public class UserService {
     }
 
     public User updateUser(User newUser) {
-        // проверяем необходимые условия
         if (newUser.getId() == null) {
             throw new ConditionsNotMetException("Id должен быть указан");
         }
